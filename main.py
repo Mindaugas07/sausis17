@@ -90,19 +90,35 @@ def filtering_gen(list_of_tuples: List[tuple], age: int) -> Generator[int, None,
             yield person_tuple
 
 
-for person in filtering_gen(persons, 40):
-    print(person)
+def upper_func(new_tuple):
+    modified_tuple_list = list(new_tuple)
+    modified_tuple_list[0] = modified_tuple_list[0].upper()
+    modified_tuple = list(modified_tuple_list)
+    return modified_tuple
 
 
 def maping_gen(list_of_tuples: List[tuple]) -> Generator[int, None, None]:
-    pass
+    modified_tuples = map(upper_func, (list_of_tuples))
+    for last_tuple in modified_tuples:
+        yield last_tuple
 
 
 def aggregation_gen(list_of_tuples: List[tuple]) -> Generator[int, None, None]:
     salary_sum = 0
     for index, person_tuple in enumerate(list_of_tuples):
         salary_sum += person_tuple[3]
-    return salary_sum / (index + 1)
+    yield salary_sum / (index + 1)
 
 
-print(aggregation_gen(persons))
+for person in filtering_gen(persons, 46):
+    print(person)
+print()
+print()
+
+for person in maping_gen(persons):
+    print(person)
+print()
+print()
+
+for person in aggregation_gen(persons):
+    print(person)
